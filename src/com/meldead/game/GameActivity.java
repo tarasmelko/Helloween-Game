@@ -6,6 +6,7 @@ import org.cocos2d.opengl.CCGLSurfaceView;
 import org.cocos2d.sound.SoundEngine;
 
 import android.app.Activity;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
@@ -28,10 +29,7 @@ public class GameActivity extends Activity {
 
 	@Override
 	public void onBackPressed() {
-		SoundEngine.sharedEngine().stopSound();
-		finish();
-	
-		super.onBackPressed();
+		// super.onBackPressed();
 	}
 
 	@Override
@@ -48,12 +46,13 @@ public class GameActivity extends Activity {
 
 		CCScene scene = GameLayer.scene();
 		CCDirector.sharedDirector().runWithScene(scene);
+
 	}
 
 	@Override
 	public void onPause() {
 		super.onPause();
-	
+
 		CCDirector.sharedDirector().pause();
 	}
 

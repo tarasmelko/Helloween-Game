@@ -7,10 +7,13 @@ import org.cocos2d.layers.CCColorLayer;
 import org.cocos2d.layers.CCScene;
 import org.cocos2d.nodes.CCDirector;
 import org.cocos2d.nodes.CCLabel;
+import org.cocos2d.nodes.CCSprite;
+import org.cocos2d.types.CGPoint;
 import org.cocos2d.types.CGSize;
 import org.cocos2d.types.ccColor3B;
 import org.cocos2d.types.ccColor4B;
 
+import android.content.Intent;
 import android.view.MotionEvent;
 
 public class GameOverLayer extends CCColorLayer
@@ -41,9 +44,13 @@ public class GameOverLayer extends CCColorLayer
 		this.setIsTouchEnabled(true);
 		
 		CGSize winSize = CCDirector.sharedDirector().displaySize();
-		
-		_label = CCLabel.makeLabel("Won't See Me", "DroidSans", 32);
-		_label.setColor(ccColor3B.ccBLACK);
+		CCSprite background = CCSprite.sprite("wood.jpg");
+		background.setScaleX(winSize.getWidth() / background.getTexture().getWidth());
+		background.setScaleY(winSize.getHeight() / background.getTexture().getHeight());
+		background.setPosition(CGPoint.make(winSize.width / 2, winSize.height / 2));
+		addChild(background);
+		_label = CCLabel.makeLabel("Won't See Me", "fonts/game_over.ttf", 170);
+		_label.setColor(ccColor3B.ccRED);
 		_label.setPosition(winSize.width / 2.0f, winSize.height / 2.0f);
 		addChild(_label);
 		
@@ -52,7 +59,8 @@ public class GameOverLayer extends CCColorLayer
 	
 	public void gameOverDone()
 	{
-		CCDirector.sharedDirector().replaceScene(GameLayer.scene());
+		Intent mainMenu = new Intent(CCDirector.sharedDirector().getActivity(), MainMenuActivity.class);
+		CCDirector.sharedDirector().getActivity().startActivity(mainMenu);
 	}
 	
 	@Override
