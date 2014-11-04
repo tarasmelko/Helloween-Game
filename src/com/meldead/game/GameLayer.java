@@ -74,6 +74,7 @@ public class GameLayer extends CCColorLayer {
 	private CCSprite pen;
 	private CCSprite build;
 	private CCSprite pause;
+	private CCSprite fire;
 
 	private float enemyLevelSpeed = 0.3f;
 	private float actualDuration = 2.5f;
@@ -173,7 +174,10 @@ public class GameLayer extends CCColorLayer {
 		player.setVisible(false);
 
 		// life
-
+		fire = CCSprite.sprite(Constants.FOLDER + "shit.png");
+		fire.setPosition(winSize.width - fire.getTexture().getWidth() / 1.3f,
+				fire.getTexture().getHeight() / 1.3f);
+		addChild(fire);
 		//
 		// head
 		exit = CCSprite.sprite(Constants.FOLDER + "exit.png");
@@ -238,10 +242,16 @@ public class GameLayer extends CCColorLayer {
 		} else if (CGRect.containsPoint((resume.getBoundingBox()), location)) {
 			resumeIterator = 3;
 			resumeGame();
+		} else if (CGRect.containsPoint((fire.getBoundingBox()), location)) {
+			addMissile();
 		} else {
 			motion = 10;
 		}
 		return super.ccTouchesBegan(event);
+	}
+
+	private void addMissile() {
+
 	}
 
 	public void resumeGame() {
@@ -515,8 +525,8 @@ public class GameLayer extends CCColorLayer {
 	}
 
 	public void startPlayerMove(Object sender) {
-		this.schedule("addBuildings", 0.8f);
-		this.schedule("addBuildingsLow", 0.2f);
+		// this.schedule("addBuildings", 0.8f);
+		// this.schedule("addBuildingsLow", 0.2f);
 		this.schedule("playerMove");
 		this.schedule("getCollision");
 		this.schedule("updateScoreLabel", 4f);
